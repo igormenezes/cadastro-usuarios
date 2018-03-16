@@ -1,0 +1,30 @@
+<div class='container'>
+  <form [formGroup]="form" (ngSubmit)="submit(form)">
+    <div class="form-group">
+      <label for="login-email">Email address</label>
+      <input type="email" class="form-control" id="user-email" name="email" formControlName="email" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input type="password" class="form-control" id="user-password" name="password" formControlName="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="user-type">Type User</label>
+      <select ng-valid ng-touched class="form-control" id="user-type" name="type" formControlName="type">
+        <option id='option-type-user-{{type.name}}' *ngFor="let type of typesUser" value="{{type.value}}">
+          {{type.name}}
+        </option>
+      </select>
+    </div>
+    <div *ngIf="form.controls['email'].invalid && form.controls['email'].touched" class="alert alert-danger" role="alert">
+      {{validatorMessage.email}}
+    </div>
+    <div *ngIf="form.controls['password'].invalid && form.controls['password'].touched" class="alert alert-danger" role="alert">
+      {{validatorMessage.password}}
+    </div>
+    <div *ngIf="form.controls['type'].invalid && form.controls['type'].touched" class="alert alert-danger" role="alert">
+      {{validatorMessage.type}}
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+  </form>
+</div>
