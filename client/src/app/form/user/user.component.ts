@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.urlPath = '/lista-usuarios/server/';
+    this.urlPath = '/save';
     this.urlDatasUser = '/lista-usuarios/server/';
     this.typesUser = [
       { 'name': 'Comum', 'value': 0, 'selected': true },
@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
     this.httpRequestService.post(this.urlPath, form.value)
       .map(res => res.json())
       .subscribe(data => {
-        console.log('success');
+        console.log(data);
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 
