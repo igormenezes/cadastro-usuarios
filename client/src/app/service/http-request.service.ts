@@ -11,7 +11,7 @@ export class HttpRequestService {
   constructor(private http: Http) { }
 
   post(urlPath: String, data: HTMLInputElement): Observable<any> {
-    return this.http.post(this.url + '' + urlPath, JSON.stringify(data));
+    return this.http.post(this.url + '' + urlPath, data);
   }
 
 }
