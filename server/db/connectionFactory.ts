@@ -1,6 +1,6 @@
 import * as mysql from 'mysql';
 
-export class Connection {
+export class ConnectionFactory {
     private static db: any;
 
     private static getData(): Object {
@@ -21,18 +21,18 @@ export class Connection {
         }
     }
 
-    public static call(): Connection {
-        if (Connection.db && Connection.db.state === 'authenticated') {
-            return Connection.db;
+    public static call(): ConnectionFactory {
+        if (ConnectionFactory.db && ConnectionFactory.db.state === 'authenticated') {
+            return ConnectionFactory.db;
         }
 
-        Connection.db = mysql.createConnection(Connection.getData());
-        Connection.db.connect((err: String) => {
+        ConnectionFactory.db = mysql.createConnection(ConnectionFactory.getData());
+        ConnectionFactory.db.connect((err: String) => {
             if (err) {
                 throw 'errorConnection:' + err;
             }
         });
 
-        return Connection.db;
+        return ConnectionFactory.db;
     }
 }
