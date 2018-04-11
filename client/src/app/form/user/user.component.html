@@ -25,6 +25,14 @@
     <div *ngIf="form.controls['type'].invalid && form.controls['type'].touched" class="alert alert-danger" role="alert">
       {{validatorMessage.type}}
     </div>
+    <div *ngIf="messageSuccess" class="alert alert-success" role="alert">
+      {{ messageSuccess }}
+    </div>
+    <ng-container *ngIf="messageErrorsServer">
+      <div *ngFor="let message of messageErrorsServer" class="alert alert-danger" role="alert">
+        {{ message }}
+      </div>
+    </ng-container>
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
   </form>
 </div>

@@ -16,6 +16,8 @@ export class UserComponent implements OnInit {
   id: HTMLInputElement;
   form: any;
   validatorMessage: Object;
+  messageErrorsServer: Array<String>;
+  messageSuccess: String;
 
   constructor(
     private httpRequestService: HttpRequestService,
@@ -39,7 +41,7 @@ export class UserComponent implements OnInit {
     if (this.id) {
       this.getDatasUser(this.id);
     }
-    
+
     this.form = this.validatorFormService.validate(this.fieldsValidator);
     this.validatorMessage = this.validatorFormService.messages;
   }
@@ -48,7 +50,12 @@ export class UserComponent implements OnInit {
     this.httpRequestService.post(this.urlPath, form.value)
       .map(res => res.json())
       .subscribe(data => {
-        console.log(data);
+        if (data.success) {
+          this.messageSuccess = data.msg;
+          this.form = this.validatorFormService.validate(this.fieldsValidator);
+        } else {
+          this.messageErrorsServer = data.msg;
+        }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 
