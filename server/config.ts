@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as expressValidator from 'express-validator';
 
 class Config {
     readonly app: any;
@@ -13,6 +14,7 @@ class Config {
         this.app.use(cors());
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(bodyParser.json());
+        this.app.use(expressValidator());
     }
 
     public autoload(): any {
@@ -21,8 +23,9 @@ class Config {
                 extensions: ['.js', '.json', '.node'],
                 cwd: process.env.NODE_ENV == 'dev' ? 'dist' : ''
             })
-            .include('controller')
-            .then('model')
+            .include('controllers')
+            .then('models')
+            .then('helpers')
             .then('db')
             .into(this.app);
 
