@@ -14,4 +14,8 @@ export class HttpRequestService {
     return this.http.post(this.url + '' + urlPath, data);
   }
 
+  get(urlPath: String): Observable<any> {
+    return this.http.get(this.url + '' + urlPath);
+  }
+
 }

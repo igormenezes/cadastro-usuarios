@@ -16,8 +16,9 @@ export class UserComponent implements OnInit {
   id: HTMLInputElement;
   form: any;
   validatorMessage: Object;
-  messageErrorsServer: Array<String>;
+  errorsValidationServer: Array<String>;
   messageSuccess: String;
+  messageAlert: String;
 
   constructor(
     private httpRequestService: HttpRequestService,
@@ -27,7 +28,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.urlPath = '/save';
-    this.urlDatasUser = '/lista-usuarios/server/';
+    this.urlDatasUser = '/show-user';
     this.typesUser = [
       { 'name': 'Comum', 'value': 0, 'selected': true },
       { 'name': 'Administrador', 'value': 1, 'selected': false }
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit {
 
     if (this.id) {
       this.getDatasUser(this.id);
+      this.urlPath = 'update-user/' + this.id;
     }
 
     this.form = this.validatorFormService.validate(this.fieldsValidator);
@@ -47,23 +49,30 @@ export class UserComponent implements OnInit {
   }
 
   submit(form: HTMLFormElement) {
+    this.messageSuccess = null;
+    this.errorsValidationServer = null;
+
     this.httpRequestService.post(this.urlPath, form.value)
       .map(res => res.json())
-      .subscribe(data => {
-        if (data.success) {
-          this.messageSuccess = data.msg;
+      .subscribe(response => {
+        if (response.success) {
+          this.messageSuccess = response.msg;
           this.form = this.validatorFormService.validate(this.fieldsValidator);
         } else {
-          this.messageErrorsServer = data.msg;
+          this.errorsValidationServer = response.msg;
         }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 
-  private getDatasUser(id: HTMLInputElement) {
-    this.httpRequestService.post(this.urlDatasUser, id)
+  private getDatasUser(id: any) {
+    this.httpRequestService.get(this.urlDatasUser + '/' + id)
       .map(res => res.json())
-      .subscribe(data => {
-        this.form = this.validatorFormService.validate(this.fieldsValidator, data);
+      .subscribe(response => {
+        if (response.success) {
+          this.form = this.validatorFormService.validate(this.fieldsValidator, response.data);
+        } else {
+          this.messageAlert = response.msg
+        }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 

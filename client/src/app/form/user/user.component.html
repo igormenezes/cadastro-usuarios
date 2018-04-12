@@ -28,9 +28,12 @@
     <div *ngIf="messageSuccess" class="alert alert-success" role="alert">
       {{ messageSuccess }}
     </div>
-    <ng-container *ngIf="messageErrorsServer">
-      <div *ngFor="let message of messageErrorsServer" class="alert alert-danger" role="alert">
-        {{ message }}
+    <div *ngIf="messageAlert" class="alert alert-warning" role="alert">
+      {{ messageAlert }}
+    </div>
+    <ng-container *ngIf="errorsValidationServer">
+      <div *ngFor="let error of errorsValidationServer" class="alert alert-danger" role="alert">
+        {{ error }}
       </div>
     </ng-container>
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
