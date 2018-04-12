@@ -17,4 +17,22 @@ export class User extends connectionAbstract {
         );
     }
 
+    public get(id: Number, callback: any) {
+        let sql = "SELECT * FROM users WHERE id = ?";
+
+        this.connection.query(sql, id,
+            (error: String, result: any) => {
+                if (error) {
+                    return callback('errorSelectUser:' + error);
+                }
+
+                if (result.length === 0) {
+                    callback('Usuário não encontrado!', true);
+                }
+
+                callback(null, result[0]);
+                this.connection.end();
+            }
+        );
+    }
 }
