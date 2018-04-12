@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpRequestService } from '../../service/http-request.service';
 import { ValidatorFormService } from '../../service/validator-form.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +23,8 @@ export class UserComponent implements OnInit {
   constructor(
     private httpRequestService: HttpRequestService,
     private validatorFormService: ValidatorFormService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -71,7 +72,7 @@ export class UserComponent implements OnInit {
         if (response.success) {
           this.form = this.validatorFormService.validate(this.fieldsValidator, response.data);
         } else {
-          this.messageAlert = response.msg
+          this.router.navigate(['']);
         }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
