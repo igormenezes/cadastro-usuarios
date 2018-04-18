@@ -12,7 +12,7 @@ export class ValidatorUser implements ValidatorInterface {
         };
     }
 
-    public validate(req: any, onlyId?: Boolean) {
+    public validate(req: Express.Session, onlyId?: Boolean) {
         if (onlyId) {
             req.check('id', this.messages.id).isNumeric();
         } else {

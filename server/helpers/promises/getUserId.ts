@@ -1,6 +1,6 @@
 import { User } from "../../models/user";
 
-export function getUserIdPromise(req: any): Promise<any> {
+export function getUserIdPromise(req: Express.Session): Promise<any> {
     return new Promise((resolve, reject) => {
         let user: User = new User;
 

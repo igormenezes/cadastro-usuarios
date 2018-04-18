@@ -1,6 +1,6 @@
 import { ValidatorUser } from "../validator/validatorUser";
 
-export function validationUserPromise(req: any): Promise<any> {
+export function validationUserPromise(req: Express.Session): Promise<any> {
     return new Promise((resolve, reject) => {
         let validatorUser = new ValidatorUser();
         let err = validatorUser.validate(req);
