@@ -17,7 +17,7 @@ export class User extends connectionAbstract {
         );
     }
 
-    public get(id: Number, callback: any) {
+    public getById(id: Number, callback: any) {
         let sql = "SELECT * FROM users WHERE id = ?";
 
         this.connection.query(sql, id,
