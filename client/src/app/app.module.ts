@@ -7,10 +7,12 @@ import { FormModule } from './form/form.module';
 
 import { HttpRequestService } from './service/http-request.service';
 import { ValidatorFormService } from './service/validator-form.service';
+import { ShowComponent } from './user/show/show.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ShowComponent
   ],
   imports: [
     BrowserModule,

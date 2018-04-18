@@ -1,0 +1,22 @@
+<div class='container'>
+  <div *ngIf="users">
+    <table *ngFor="let user of users; let i = index" class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Type</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ i }}</td>
+          <td style='width: 50%'>{{ user.email }}</td>
+          <td style='width: 50%'>{{ user.type === 1 ? 'Adminsitrador' : 'Comum' }}</td>
+          <td><a class="nav-link" [routerLink]="['/edit-user/', user.id]">Editar</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
