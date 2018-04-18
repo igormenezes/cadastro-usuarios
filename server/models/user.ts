@@ -54,4 +54,23 @@ export class User extends connectionAbstract {
             }
         );    
     }
+
+    public getAll(callback: any) {
+        let sql = "SELECT * FROM users";
+
+        this.connection.query(sql,
+            (error: String, result: any) => {
+                if (error) {
+                    return callback('errorSelectUserAll:' + error);
+                }
+
+                if (result.length === 0) {
+                    return callback('Não foi encontrado nenhum usuário!', true);
+                }
+
+                callback(null, result);
+                this.connection.end();
+            }
+        );
+    }
 }
