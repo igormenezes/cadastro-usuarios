@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.urlPath = '/lista-usuarios/server/';
+    this.urlPath = '/login';
     this.fieldsValidator = { 'email': true, 'password': true };
 
     this.form = this.validatorFormService.validate(this.fieldsValidator);

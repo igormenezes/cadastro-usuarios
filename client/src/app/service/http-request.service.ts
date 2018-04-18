@@ -11,11 +11,11 @@ export class HttpRequestService {
   constructor(private http: Http) { }
 
   post(urlPath: String, data: HTMLInputElement): Observable<any> {
-    return this.http.post(this.url + '' + urlPath, data);
+    return this.http.post(this.url + '' + urlPath, data, {withCredentials: true});
   }
 
   get(urlPath: String): Observable<any> {
-    return this.http.get(this.url + '' + urlPath);
+    return this.http.get(this.url + '' + urlPath, {withCredentials: true});
   }
 
 }

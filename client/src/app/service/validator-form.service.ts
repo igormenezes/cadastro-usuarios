@@ -15,7 +15,7 @@ export class ValidatorFormService {
   validate(fieldsValidators: any, fieldsValues?: any): FormGroup {
     return this.form = this.formBuilder.group({
       'email': [fieldsValues ? fieldsValues.email : '', fieldsValidators.email ? [Validators.required, Validators.email] : ''],
-      'password': [fieldsValues ? fieldsValues.password : '', fieldsValidators.password ? [Validators.required, Validators.minLength(3)] : ''],
+      'password': [fieldsValues ? fieldsValues.password : '', fieldsValidators.password ? [Validators.required, Validators.minLength(6)] : ''],
       'type': [fieldsValues ? fieldsValues.type : '', fieldsValidators.type ? [Validators.required] : '']
     });
   }
