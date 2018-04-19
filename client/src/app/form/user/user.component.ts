@@ -35,7 +35,6 @@ export class UserComponent implements OnInit {
       { 'name': 'Administrador', 'value': 1, 'selected': false }
     ]
 
-
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
     });

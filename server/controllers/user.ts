@@ -77,4 +77,9 @@ export = (app: any) => {
     app.get('/verify-user', checkLogin, (req: Express.Session, res: Express.Session) => {
         res.status(200).send({ success: true });
     });
+
+    app.get('/logout', function (req: Express.Session, res: Express.Session) {
+        req.logout();
+        res.status(200).send({success: true});
+    });
 }

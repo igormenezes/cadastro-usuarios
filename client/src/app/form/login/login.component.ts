@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
       .map(res => res.json())
       .subscribe(response => {
         if (response.success) {
+          document.getElementById("logout").style.display = "block";
           this.router.navigate(['/show-users']);
         } else {
           this.messageAlert = response.msg;
