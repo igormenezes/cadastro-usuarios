@@ -1,11 +1,12 @@
 import { connectionAbstract } from "../db/connectionAbstract";
 import { Query } from "mysql";
+import { BCRYPT } from '../config';
 
 export class User extends connectionAbstract {
     public save(email: String, password: String, type: Number, callback: any) {
         let sql = 'INSERT INTO users (email, password, type) VALUES (?, ?, ?)';
 
-        this.connection.query(sql, [email, password, type],
+        this.connection.query(sql, [email, BCRYPT.hashSync(password, 10), type],
             (error: String, result: any) => {
                 if (error) {
                     return callback('errorSaveUser:' + error);
@@ -36,10 +37,10 @@ export class User extends connectionAbstract {
         );
     }
 
-    public getByEmailPassword(email: String, password: String, callback: any){
-        let sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    public getByEmail(email: String, callback: any) {
+        let sql = "SELECT * FROM users WHERE email = ?";
 
-        this.connection.query(sql, [email, password],
+        this.connection.query(sql, [email],
             (error: String, result: any) => {
                 if (error) {
                     return callback('errorSelectUserByEmailPassword:' + error);
@@ -52,7 +53,7 @@ export class User extends connectionAbstract {
                 callback(null, result[0]);
                 this.connection.end();
             }
-        );    
+        );
     }
 
     public getAll(callback: any) {

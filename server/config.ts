@@ -5,9 +5,11 @@ import * as expressValidator from 'express-validator';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import * as passportLocal from 'passport-local';
+import * as bcrypt from 'bcrypt';
 
 export const PASSPORT = passport;
 export const PASSPORTLOCAL = passportLocal.Strategy;
+export const BCRYPT = bcrypt;
 
 class Config {
     readonly app: any;

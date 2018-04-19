@@ -1,6 +1,7 @@
 import { PASSPORT } from "../../config";
 import { PASSPORTLOCAL } from "../../config";
 import { User } from "../../models/user";
+import { BCRYPT } from '../../config';
 
 export class authenticationPassport {
     readonly localStrategy: any;
@@ -27,9 +28,14 @@ export class authenticationPassport {
         },
             (username: any, password: any, done: any) => {
                 let user = new User();
-                user.getByEmailPassword(username, password, (err: any, data: any) => {
+                user.getByEmail(username, (err: any, data: any) => {
                     if (err) {
                         let error: Object = { msg: err, status: data ? 200 : 400 };
+                        return done(error);
+                    }
+
+                    if (!BCRYPT.compareSync(password, data.password)) {
+                        let error: Object = { msg: 'Login inválido!', status: 200 };
                         return done(error);
                     }
 
