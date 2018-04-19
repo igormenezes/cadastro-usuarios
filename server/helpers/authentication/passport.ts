@@ -12,12 +12,10 @@ export class authenticationPassport {
         this.localStrategy = PASSPORTLOCAL;
 
         this.passport.serializeUser((user: any, done: any) => {
-            console.log('serializeUser', 'User:' + user.id);
             done(null, user.id);
         })
 
         this.passport.deserializeUser((id: any, done: any) => {
-            console.log('deserializeUser', 'Id:' + id);
             let user = { 'id': 13, 'email': 'jesus@yahoo.com.br' };
             done(null, user.id);
         })
