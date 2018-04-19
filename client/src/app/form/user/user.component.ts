@@ -34,15 +34,18 @@ export class UserComponent implements OnInit {
       { 'name': 'Comum', 'value': 0, 'selected': true },
       { 'name': 'Administrador', 'value': 1, 'selected': false }
     ]
-    this.fieldsValidator = { 'email': true, 'password': true, 'type': true };
+
 
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
     });
 
     if (this.id) {
+      this.fieldsValidator = { 'email': true, 'password': false, 'type': true };
+      this.urlPath = '/update-user/' + this.id;
       this.getDatasUser(this.id);
-      this.urlPath = 'update-user/' + this.id;
+    } else {
+      this.fieldsValidator = { 'email': true, 'password': true, 'type': true };
     }
 
     this.form = this.validatorFormService.validate(this.fieldsValidator);
@@ -56,7 +59,9 @@ export class UserComponent implements OnInit {
     this.httpRequestService.post(this.urlPath, form.value)
       .map(res => res.json())
       .subscribe(response => {
-        if (response.success) {
+        if (response.success && this.id) {
+          this.router.navigate(['/show-users']);
+        } else if (response.success) {
           this.messageSuccess = response.msg;
           this.form = this.validatorFormService.validate(this.fieldsValidator);
         } else {

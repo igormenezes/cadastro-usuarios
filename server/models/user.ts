@@ -18,6 +18,21 @@ export class User extends connectionAbstract {
         );
     }
 
+    public update(id: Number, email: String, type: Number, callback: any) {
+        let sql = 'UPDATE users SET email = ?, type = ? WHERE id = ?';
+
+        this.connection.query(sql, [email, type, id],
+            (error: String, result: any) => {
+                if (error) {
+                    return callback('errorSaveUser:' + error);
+                }
+
+                callback(null, result.insertId);
+                this.connection.end();
+            }
+        );
+    }
+
     public getById(id: Number, callback: any) {
         let sql = "SELECT * FROM users WHERE id = ?";
 

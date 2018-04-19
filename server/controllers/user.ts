@@ -1,5 +1,6 @@
 import { validationUserPromise } from "../helpers/promises/validationUser";
 import { saveUserPromise } from "../helpers/promises/saveUser";
+import { updateUserPromise } from "../helpers/promises/updateUser";
 import { getUserIdPromise } from "../helpers/promises/getUserId";
 import { getUserAllPromise } from "../helpers/promises/getUserAll";
 import { authenticationPassport } from "../helpers/authentication/passport";
@@ -15,6 +16,21 @@ export = (app: any) => {
             )
             .then(resolve => {
                 res.status(200).send({ success: true, msg: 'Usuário registrado com sucesso!' });
+            })
+            .catch(reject => {
+                res.status(reject.status).send({ success: false, msg: reject.msg });
+            })
+    });
+
+    app.post('/update-user/:id', (req: Express.Session, res: Express.Session) => {
+        let fieldsValidation: Object = { id: true, email: true, type: true };
+        let datas: Object = { id: req.params.id, email: req.body.email, type: req.body.type };
+        validationUserPromise(req, fieldsValidation)
+            .then(() =>
+                updateUserPromise(datas)
+            )
+            .then(resolve => {
+                res.status(200).send({ success: true, msg: 'Usuário atualizado com sucesso!' });
             })
             .catch(reject => {
                 res.status(reject.status).send({ success: false, msg: reject.msg });

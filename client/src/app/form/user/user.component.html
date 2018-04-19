@@ -4,7 +4,7 @@
       <label for="login-email">Email address</label>
       <input type="email" class="form-control" id="user-email" name="email" formControlName="email" placeholder="Enter email">
     </div>
-    <div class="form-group">
+    <div *ngIf='!id' class="form-group">
       <label for="login-password">Password</label>
       <input type="password" class="form-control" id="user-password" name="password" formControlName="password" placeholder="Password">
     </div>
