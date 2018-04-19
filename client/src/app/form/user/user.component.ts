@@ -81,5 +81,4 @@ export class UserComponent implements OnInit {
         }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
-
 }

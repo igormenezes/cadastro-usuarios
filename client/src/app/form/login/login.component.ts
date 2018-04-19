@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   urlPath: String;
+  urlVerify: String;
   fieldsValidator: Object;
   form: any;
   validatorMessage: Object;
@@ -28,6 +29,17 @@ export class LoginComponent implements OnInit {
 
     this.form = this.validatorFormService.validate(this.fieldsValidator);
     this.validatorMessage = this.validatorFormService.messages;
+
+    this.urlVerify = '/verify-user';
+
+
+    this.httpRequestService.get(this.urlVerify)
+      .map(res => res.json())
+      .subscribe(response => {
+        if (response.success) {
+          this.router.navigate(['/show-users']);
+        }
+      }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 
   submit(form: HTMLFormElement) {

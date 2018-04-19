@@ -73,4 +73,8 @@ export = (app: any) => {
                 res.status(reject.status).send({ success: false, msg: reject.msg });
             });
     });
+
+    app.get('/verify-user', checkLogin, (req: Express.Session, res: Express.Session) => {
+        res.status(200).send({ success: true });
+    });
 }
