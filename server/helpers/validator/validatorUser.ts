@@ -12,12 +12,20 @@ export class ValidatorUser implements ValidatorInterface {
         };
     }
 
-    public validate(req: Express.Session, onlyId?: Boolean) {
-        if (onlyId) {
+    public validate(req: Express.Session, fieldsValidation: any) {
+        if (fieldsValidation.id) {
             req.check('id', this.messages.id).isNumeric();
-        } else {
+        }
+
+        if (fieldsValidation.email) {
             req.check('email', this.messages.email).isEmail();
+        }
+
+        if (fieldsValidation.password) {
             req.check('password', this.messages.password).isLength({ min: 6 });
+        }
+
+        if (fieldsValidation.type) {
             req.check('type', this.messages.type).notEmpty();
         }
 

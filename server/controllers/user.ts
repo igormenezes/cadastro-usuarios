@@ -1,5 +1,4 @@
 import { validationUserPromise } from "../helpers/promises/validationUser";
-import { validationIdUserPromise } from "../helpers/promises/validationIdUser";
 import { saveUserPromise } from "../helpers/promises/saveUser";
 import { getUserIdPromise } from "../helpers/promises/getUserId";
 import { getUserAllPromise } from "../helpers/promises/getUserAll";
@@ -8,7 +7,9 @@ import { checkLogin } from "../middlewares/middlewares";
 
 export = (app: any) => {
     app.post('/save', (req: Express.Session, res: Express.Session) => {
-        validationUserPromise(req)
+        let fieldsValidation: Object = { email: true, password: true, type: true };
+
+        validationUserPromise(req, fieldsValidation)
             .then(() =>
                 saveUserPromise(req)
             )
@@ -21,7 +22,9 @@ export = (app: any) => {
     });
 
     app.get('/show-user/:id', checkLogin, (req: Express.Session, res: Express.Session) => {
-        validationIdUserPromise(req)
+        let fieldsValidation: Object = { id: true };
+
+        validationUserPromise(req, fieldsValidation)
             .then(() =>
                 getUserIdPromise(req)
             )
