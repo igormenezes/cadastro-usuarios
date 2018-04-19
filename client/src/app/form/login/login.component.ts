@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpRequestService } from '../../service/http-request.service';
 import { ValidatorFormService } from '../../service/validator-form.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'form-login',
@@ -13,10 +14,12 @@ export class LoginComponent implements OnInit {
   fieldsValidator: Object;
   form: any;
   validatorMessage: Object;
+  messageAlert: String;
 
   constructor(
     private httpRequestService: HttpRequestService,
-    private validatorFormService: ValidatorFormService
+    private validatorFormService: ValidatorFormService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,8 +33,12 @@ export class LoginComponent implements OnInit {
   submit(form: HTMLFormElement) {
     this.httpRequestService.post(this.urlPath, form.value)
       .map(res => res.json())
-      .subscribe(data => {
-        console.log(data);
+      .subscribe(response => {
+        if (response.success) {
+          this.router.navigate(['/show-users']);
+        } else {
+          this.messageAlert = response.msg;
+        }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
 

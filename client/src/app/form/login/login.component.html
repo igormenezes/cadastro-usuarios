@@ -14,6 +14,9 @@
     <div *ngIf="form.controls['password'].invalid && form.controls['password'].touched" class="alert alert-danger" role="alert">
       {{validatorMessage.password}}
     </div>
+    <div *ngIf="messageAlert" class="alert alert-danger" role="alert">
+      {{messageAlert}}
+    </div>
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
   </form>
 </div>
