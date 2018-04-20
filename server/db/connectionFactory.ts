@@ -22,10 +22,6 @@ export class ConnectionFactory {
     }
 
     public static call(): ConnectionFactory {
-        if (ConnectionFactory.db && ConnectionFactory.db.state === 'authenticated') {
-            return ConnectionFactory.db;
-        }
-
         ConnectionFactory.db = mysql.createConnection(ConnectionFactory.getData());
         ConnectionFactory.db.connect((err: String) => {
             if (err) {
