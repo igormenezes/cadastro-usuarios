@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { HttpRequestService } from '../../service/http-request.service';
 import { ValidatorFormService } from '../../service/validator-form.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -53,6 +54,7 @@ export class UserComponent implements OnInit {
 
   submit(form: HTMLFormElement) {
     this.messageSuccess = null;
+    this.messageAlert = null;
     this.errorsValidationServer = null;
 
     this.httpRequestService.post(this.urlPath, form.value)
@@ -63,6 +65,8 @@ export class UserComponent implements OnInit {
         } else if (response.success) {
           this.messageSuccess = response.msg;
           this.form = this.validatorFormService.validate(this.fieldsValidator);
+        } else if (response.repeatUser) {
+          this.messageAlert = response.msg;
         } else {
           this.errorsValidationServer = response.msg;
         }
@@ -79,5 +83,13 @@ export class UserComponent implements OnInit {
           this.router.navigate(['']);
         }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
+  }
+
+  getReadonly() {
+    if (this.id) {
+      return "readonly='true'";
+    }
+
+    return "readonly='true'";
   }
 }

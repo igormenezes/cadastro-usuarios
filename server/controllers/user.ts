@@ -1,6 +1,7 @@
 import { validationUserPromise } from "../helpers/promises/validationUser";
 import { saveUserPromise } from "../helpers/promises/saveUser";
 import { updateUserPromise } from "../helpers/promises/updateUser";
+import { findExistUserByEmailPromise } from "../helpers/promises/findExistUserByEmail";
 import { getUserIdPromise } from "../helpers/promises/getUserId";
 import { getUserAllPromise } from "../helpers/promises/getUserAll";
 import { authenticationPassport } from "../helpers/authentication/passport";
@@ -12,28 +13,32 @@ export = (app: any) => {
 
         validationUserPromise(req, fieldsValidation)
             .then(() =>
+                findExistUserByEmailPromise(req.body.email)
+            )
+            .then(() =>
                 saveUserPromise(req)
             )
             .then(resolve => {
                 res.status(200).send({ success: true, msg: 'Usuário registrado com sucesso!' });
             })
             .catch(reject => {
-                res.status(reject.status).send({ success: false, msg: reject.msg });
+                res.status(reject.status).send({ success: false, repeatUser: reject.repeatUser, msg: reject.msg });
             })
     });
 
     app.post('/update-user/:id', (req: Express.Session, res: Express.Session) => {
-        let fieldsValidation: Object = { id: true, email: true, type: true };
-        let datas: Object = { id: req.params.id, email: req.body.email, type: req.body.type };
+        let fieldsValidation: Object = { id: true, type: true };
+        let datas: any = { id: req.params.id, type: req.body.type };
+
         validationUserPromise(req, fieldsValidation)
             .then(() =>
                 updateUserPromise(datas)
             )
             .then(resolve => {
-                res.status(200).send({ success: true, msg: 'Usuário atualizado com sucesso!' });
+                res.status(200).send({ success: true, msg: 'Dados do usuário atualizado com sucesso!' });
             })
             .catch(reject => {
-                res.status(reject.status).send({ success: false, msg: reject.msg });
+                res.status(reject.status).send({ success: false, repeatUser: reject.repeatUser, msg: reject.msg });
             })
     });
 
@@ -80,6 +85,6 @@ export = (app: any) => {
 
     app.get('/logout', function (req: Express.Session, res: Express.Session) {
         req.logout();
-        res.status(200).send({success: true});
+        res.status(200).send({ success: true });
     });
 }

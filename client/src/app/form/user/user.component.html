@@ -2,7 +2,12 @@
   <form [formGroup]="form" (ngSubmit)="submit(form)">
     <div class="form-group">
       <label for="login-email">Email address</label>
-      <input type="email" class="form-control" id="user-email" name="email" formControlName="email" placeholder="Enter email">
+      <div *ngIf='!id'>
+        <input type="email" class="form-control" id="user-email" name="email" formControlName="email" placeholder="Enter email">
+      </div>
+      <div *ngIf='id'>
+        <input type="email" class="form-control" id="user-email" name="email" readonly formControlName="email" placeholder="Enter email">
+      </div>
     </div>
     <div *ngIf='!id' class="form-group">
       <label for="login-password">Password</label>
@@ -28,7 +33,7 @@
     <div *ngIf="messageSuccess" class="alert alert-success" role="alert">
       {{ messageSuccess }}
     </div>
-    <div *ngIf="messageAlert" class="alert alert-warning" role="alert">
+    <div *ngIf="messageAlert" class="alert alert-danger" role="alert">
       {{ messageAlert }}
     </div>
     <ng-container *ngIf="errorsValidationServer">
