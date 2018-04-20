@@ -32,12 +32,13 @@ export class LoginComponent implements OnInit {
 
     this.urlVerify = '/verify-user';
 
-
     this.httpRequestService.get(this.urlVerify)
       .map(res => res.json())
       .subscribe(response => {
         if (response.success) {
           this.router.navigate(['/show-users']);
+        } else {
+          document.getElementById("logout").style.display = "none";
         }
       }, (error: any) => console.log('Ocorreu um erro: ' + error));
   }
