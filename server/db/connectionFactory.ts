@@ -18,6 +18,13 @@ export class ConnectionFactory {
                 password: '123',
                 database: 'cadastro_usuarios'
             };
+        } else if (process.env.NODE_ENV == 'test') {
+            return {
+                host: 'localhost',
+                user: 'root',
+                password: '123',
+                database: 'cadastro_usuarios_test'
+            };
         }
     }
 
