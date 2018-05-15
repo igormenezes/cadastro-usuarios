@@ -43,7 +43,7 @@ class Config {
         this.consign(
             {
                 extensions: ['.js', '.json', '.node'],
-                cwd: process.env.NODE_ENV == 'dev' ? 'dist' : ''
+                cwd: process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'test' ? 'dist' : ''
             })
             .include('controllers')
             .then('models')
