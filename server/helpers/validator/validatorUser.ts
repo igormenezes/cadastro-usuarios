@@ -26,7 +26,7 @@ export class ValidatorUser implements ValidatorInterface {
         }
 
         if (fieldsValidation.type) {
-            req.check('type', this.messages.type).notEmpty();
+            req.check('type', this.messages.type).isLength({max:1}).matches(/[0-1]/);
         }
 
         let validationErrors = req.validationErrors();
