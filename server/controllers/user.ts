@@ -19,7 +19,7 @@ export = (app: any) => {
                 saveUserPromise(req)
             )
             .then(resolve => {
-                res.status(200).send({ success: true, msg: 'Usuário registrado com sucesso!' });
+                res.status(200).send({ success: true, msg: 'Usuário registrado com sucesso!', id: resolve });
             })
             .catch(reject => {
                 res.status(reject.status).send({ success: false, repeatUser: reject.repeatUser, msg: reject.msg });
