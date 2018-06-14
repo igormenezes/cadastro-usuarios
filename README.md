@@ -1,5 +1,5 @@
 # cadastro-usuarios
-Angular - Sistema para cadastro de usuários (administrador, usuário comum), realização de login e alteração dos registros de usuários.
+Node.js | Angular - Sistema para cadastro de usuários (administrador, usuário comum), realização de login e alteração dos registros de usuários.
 
 1- Acesse a pasta /client e execute o seguinte comando para instalar todos os pacotes do projeto na sua maquina local:
 * npm install
